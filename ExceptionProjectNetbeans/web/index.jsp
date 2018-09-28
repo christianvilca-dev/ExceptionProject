@@ -5,14 +5,23 @@
 --%>
 
 <%@page import="org.exception.clases.Division"%>
+<%@page import="org.exception.excepciones.ExcepcionDividirPorUno"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String resultado = "";
     if (request.getParameter("btnGenerar")!=null) {
         String divisor = request.getParameter("txtDivisor");
         String dividendo = request.getParameter("txtDividendo");
-        Division division = new Division(dividendo,divisor);
-        resultado = division.dividir();
+        try {
+            Division division = new Division(dividendo,divisor);
+            resultado = division.dividir();
+        } catch (NumberFormatException nfe) {
+            resultado = "Debe digitar solo números enteros";
+        } catch (ArithmeticException ae) {
+            resultado = "No se puede dividir por cero";
+        } catch (ExcepcionDividirPorUno edpu){
+            resultado = edpu.getMessage();
+        }
     }
 %>
 <!DOCTYPE html>

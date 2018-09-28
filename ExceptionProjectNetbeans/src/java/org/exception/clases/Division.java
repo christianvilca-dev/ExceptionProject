@@ -5,6 +5,8 @@
  */
 package org.exception.clases;
 
+import org.exception.excepciones.ExcepcionDividirPorUno;
+
 /**
  *
  * @author Christian
@@ -16,22 +18,20 @@ public class Division {
     public Division() {
     }
 
-    public Division(String a, String b) {
-        try {
-            dividendo = Integer.parseInt(a);
-            divisor = Integer.parseInt(b);
-        } catch (NumberFormatException nfe) {
-            System.err.println("Error de nde: " + nfe.getMessage());
-        }
+    // Se genera la excepcion en la capa presentacion
+    public Division(String a, String b) throws NumberFormatException{
+        dividendo = Integer.parseInt(a);
+        divisor = Integer.parseInt(b);
     }
     
-    public String dividir(){
+    public String dividir() throws ArithmeticException, ExcepcionDividirPorUno{
         int resultado = 0;
-        try {
-            resultado = dividendo / divisor;
-        } catch (ArithmeticException ae) {
-            System.err.println("Error de division por cero: " + ae.getMessage());
+        if (divisor==1) {
+            throw new ExcepcionDividirPorUno("Esto no es un reto");
+        } else {
+            resultado = dividendo /divisor;
         }
+        resultado = dividendo / divisor;
         return Integer.toString(resultado);
     }
     
